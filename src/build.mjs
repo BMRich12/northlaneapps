@@ -78,6 +78,7 @@ ${body}
   <span>© ${year} ${esc(site.name)}</span>
   <nav aria-label="Footer">${apps.map((a) => `<a href="/${a.slug}/support/">${esc(a.name)} support</a>`).join("")}<a href="/privacy/">Website privacy</a><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></nav>
 </footer>
+<script src="/motion.js" defer></script>
 </body>
 </html>
 `;
@@ -205,6 +206,7 @@ write("privacy/index.html", sitePrivacy());
 write("404.html", notFound());
 if (existsSync(path.join(SITE, "cards"))) cpSync(path.join(SITE, "cards"), path.join(OUT, "cards"), { recursive: true });
 cpSync(path.join(ROOT, "src", "style.css"), path.join(OUT, "style.css"));
+cpSync(path.join(ROOT, "src", "motion.js"), path.join(OUT, "motion.js"));
 write("favicon.svg", `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#16181A"/><path d="M16 5 L22 26 L16 21 L10 26 Z" fill="#FBFAF7"/></svg>\n`);
 write("CNAME", `${site.domain}\n`);
 write(".nojekyll", "");
