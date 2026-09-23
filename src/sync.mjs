@@ -66,6 +66,9 @@ for (const slug of readdirSync(DASHBOARDS).filter((s) => existsSync(path.join(DA
   execFileSync("sips", ["-Z", "512", icon, "--out", path.join(out, "icon.png")], { stdio: "ignore" });
   const screens = screensFor(slug, dash, o.hero).filter((f) => existsSync(f)).slice(0, 3);
   screens.forEach((f, i) => execFileSync("sips", ["-Z", "1100", f, "--out", path.join(out, `screen-${i + 1}.png`)], { stdio: "ignore" }));
+  // The app's remote config (maintenance message, kill switches): the app fetches <site>/<slug>/config.json.
+  const config = path.join(MEMORY, "docs", slug, "config.json");
+  if (existsSync(config)) { mkdirSync(path.join(SITE, "config"), { recursive: true }); writeFileSync(path.join(SITE, "config", `${slug}.json`), readFileSync(config, "utf8")); }
   const appStoreId = /^\d+$/.test(meta.app_store_id ?? "") ? Number(meta.app_store_id) : null;
   apps.push({
     slug,

@@ -150,6 +150,9 @@ for (const a of apps) {
   write(`${a.slug}/index.html`, appPage(a));
   for (const k of LEGAL) write(`${a.slug}/${k}/index.html`, legalPage(a, k));
   cpSync(path.join(SITE, "assets", a.slug), path.join(OUT, "assets", a.slug), { recursive: true });
+  // Its remote config, where the app looks for it (Helix points App/RemoteConfig.swift at <site>/<slug>/config.json).
+  const config = path.join(SITE, "config", `${a.slug}.json`);
+  if (existsSync(config)) write(`${a.slug}/config.json`, readFileSync(config, "utf8"));
 }
 write("404.html", notFound());
 cpSync(path.join(ROOT, "src", "style.css"), path.join(OUT, "style.css"));

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "minimumVersion": "0.1",
+  "maintenance": {
+    "on": false,
+    "message": ""
+  },
+  "killSwitches": {},
+  "flags": {},
+  "updatedAt": null
+}
