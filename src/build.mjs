@@ -34,8 +34,14 @@ const md = (text) => text.trim().split(/\n{2,}/).map((block) => {
   return lines.map((l) => (l.startsWith("## ") ? `<h2>${inline(l.slice(3))}</h2>` : `<p>${inline(l)}</p>`)).join("\n");
 }).join("\n");
 
-/** The studio's mark: the favicon's north arrow, in the ink colour. */
-const mark = `<svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path d="M16 6.5 21.6 25 16 20.8 10.4 25Z"/></svg>`;
+const home = JSON.parse(readFileSync(path.join(SITE, "home.json"), "utf8"));
+const COUNT = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
+/** Home copy may say {Count}; it becomes the number of apps as a word. */
+const counted = (t) => t.replace("{Count}", COUNT[apps.length] ?? String(apps.length));
+/** The studio's mark: the lane symbol in a dark circle (Figma "Lane mark"). */
+const mark = `<span class="mark"><img src="/assets/home/waves-ladder.svg" width="18" height="18" alt=""></span>`;
+const updates = `mailto:${site.email}?subject=${encodeURIComponent("Launch list")}`;
+const arrow = `<span class="arrow" aria-hidden="true">↗</span>`;
 
 const storeUrl = (a) => (a.appStoreId ? `https://apps.apple.com/app/id${a.appStoreId}` : null);
 const year = new Date().getFullYear();
@@ -43,7 +49,7 @@ const year = new Date().getFullYear();
 const cardFor = (name) => (existsSync(path.join(SITE, "cards", `${name}.png`)) ? `https://${site.domain}/cards/${name}.png` : null);
 const analytics = site.analyticsToken ? `\n<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='${JSON.stringify({ token: site.analyticsToken })}'></script>` : "";
 
-function page({ title, description, path: at, body, card = "home" }) {
+function page({ title, description, path: at, body, card = "home", bleed = false }) {
   const url = `https://${site.domain}${at}`;
   const image = cardFor(card);
   const preview = image
@@ -65,21 +71,27 @@ function page({ title, description, path: at, body, card = "home" }) {
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">${analytics}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="wrap top">
   <a class="brand" href="/">${mark}${esc(site.name)}</a>
-  <nav class="nav" aria-label="Main"><a href="/#apps">Apps</a><a href="/#about">About</a><a href="mailto:${esc(site.email)}">Contact</a></nav>
+  <nav class="nav" aria-label="Main"><a href="/#apps">Apps</a><a href="/#about">About</a><a href="/privacy/">Privacy</a><a class="button" href="${esc(updates)}">Get updates ${arrow}</a></nav>
 </header>
-<main id="main" class="wrap">
+<main id="main"${bleed ? "" : ` class="wrap"`}>
 ${body}
 </main>
-<footer class="wrap foot">
-  <div class="foot-brand"><a class="brand" href="/">${mark}${esc(site.name)}</a><p>${esc(site.tagline)}</p><p class="quiet">© ${year} ${esc(site.owner)}</p></div>
-  <nav aria-label="Footer">${apps.map((a) => `<a href="/${a.slug}/support/">${esc(a.name)} support</a>`).join("")}<a href="/privacy/">Website privacy</a><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></nav>
+<footer class="foot">
+  <div class="wrap foot-nav">
+    <div class="foot-brand"><a class="brand" href="/">${mark}${esc(site.name)}</a><p>${esc(site.tagline)}</p></div>
+    <div class="foot-links">
+      <nav aria-label="Apps"><h2>Apps</h2>${apps.map((a) => `<a href="/${a.slug}/">${esc(a.name)}</a>`).join("")}</nav>
+      <nav aria-label="Help"><h2>Help</h2><a href="mailto:${esc(site.email)}?subject=Support">Support</a><a href="/privacy/">Privacy</a><a href="mailto:${esc(site.email)}">Contact</a></nav>
+    </div>
+  </div>
+  <div class="wrap"><div class="foot-base"><span>© ${year} ${esc(site.name)}.</span><span>${esc(home.footerNote)}</span></div></div>
 </footer>
 <script src="/motion.js" defer></script>
 </body>
@@ -88,32 +100,73 @@ ${body}
 }
 
 const phone = (a, cls = "") => (a.screens[0] ? `<div class="phone ${cls}"><img src="/assets/${a.slug}/${a.screens[0]}" alt="${esc(a.name)} on iPhone" loading="lazy"></div>` : "");
-const status = (a) => (storeUrl(a) ? `<span class="badge">On the App Store</span>` : `<span class="badge">Coming soon</span>`);
+const lines = (arr) => arr.map((l) => esc(counted(l))).join("<br>");
+const availability = (a) => `<span class="availability"><span class="dot"></span>${storeUrl(a) ? "On the App Store" : "Coming soon"}</span>`;
 
-function home() {
-  const panels = apps.map((a) => `<a class="panel" href="/${a.slug}/" style="background-color: ${esc(a.colour)}">
-    <div class="panel-head"><img class="panel-icon" src="/assets/${a.slug}/icon.png" alt="">${status(a)}</div>
-    <h2 class="panel-name">${esc(a.name)}</h2>
-    <p>${esc(a.tagline)}</p>
-    <div class="rise">${phone(a)}</div>
-  </a>`).join("\n");
+/** One app's showcase: a drawn screen from site/showcase/<slug>.html, or its first real screenshot. */
+function showcase(a, i) {
+  const sc = a.showcase ?? {};
+  const drawn = path.join(SITE, "showcase", `${a.slug}.html`);
+  const screen = existsSync(drawn)
+    ? `<div class="device"><div class="screen" style="background-color: ${esc(sc.screen ?? "#F3EFE7")}"><div class="scr-status"><b>9:41</b><span>● ᯤ ▰</span></div>${readFileSync(drawn, "utf8")}</div></div>`
+    : phone(a, "device device-shot");
+  const art = sc.art ? `<img class="art art-${esc(sc.art.place)}" src="/assets/home/${esc(sc.art.file)}" alt="">` : "";
+  const label = `${String(i + 1).padStart(2, "0")}${sc.label ? ` / ${esc(sc.label)}` : ""}`;
+  return `<section class="showcase${i % 2 ? " flip" : ""}" style="--app: ${esc(a.colour)}; z-index: ${apps.length - i}" aria-label="${esc(a.name)}">
+  <div class="wrap showcase-inner">
+    <div class="stage">${art}${screen}</div>
+    <div class="story">
+      <p class="label">${label}</p>
+      <h3><a href="/${a.slug}/">${esc(a.name)}</a></h3>
+      <p class="quote">“${esc(a.tagline)}”</p>
+      <p class="blurb">${esc(sc.blurb ?? a.promise)}</p>
+      ${availability(a)}
+    </div>
+  </div>
+</section>`;
+}
+
+function homePage() {
+  const soon = apps.filter((a) => !storeUrl(a)).map((a) => a.name);
+  const soonList = soon.length > 1 ? `${soon.slice(0, -1).join(", ")} and ${soon.at(-1)}` : soon[0];
+  const closing = soon.length ? `<section class="closing">
+  <img class="closing-art" src="/assets/home/arrows.svg" width="520" height="400" alt="">
+  <div class="wrap closing-inner">
+    <h2>${esc(home.closingTitle)}</h2>
+    <p>${esc(home.closingText.replace("{apps}", soonList).replace("{are}", soon.length > 1 ? "are" : "is"))}</p>
+    <a class="button button-light" href="${esc(updates)}">${esc(home.closingButton)} ${arrow}</a>
+  </div>
+</section>` : "";
   return page({
     title: `${site.name} · ${site.tagline}`,
     description: `${site.tagline} Made by ${site.owner}.`,
     path: "/",
-    body: `<section class="hero">
-  <p class="eyebrow">Independent iPhone apps</p>
-  <h1>NorthLane<br>Apps</h1>
-  <div class="hero-row"><p>${esc(site.tagline.replace(/\.$/, ""))}, made by ${esc(site.owner)}.</p><a class="button" href="#apps">See the apps <span aria-hidden="true">↓</span></a></div>
+    bleed: true,
+    body: `<section class="wrap hero">
+  <div class="hero-copy">
+    <p class="label label-dot">${esc(home.label)}</p>
+    <h1>${lines(home.title)}</h1>
+    <p class="lede">${esc(home.lede)}</p>
+    <div class="hero-actions"><a class="button" href="#apps">${esc(home.cta)} ${arrow}</a><span>${esc(counted(home.note))}</span></div>
+  </div>
+  <div class="arch" aria-hidden="true">
+    <img class="road" src="/assets/home/road.svg" width="420" height="590" alt="">
+    <span class="seal"><span>${home.badge.map(esc).join("<br>")}</span></span>
+  </div>
 </section>
-<div class="section-head" id="apps"><h2>The apps</h2><span>${apps.length} for iPhone</span></div>
-<section class="apps" aria-label="Apps">
-${panels}
+<section class="wrap intro" id="apps">
+  <div><p class="label">${esc(home.appsLabel)}</p><h2>${lines(home.appsTitle)}</h2></div>
+  <p>${esc(home.appsNote)}</p>
 </section>
-<section id="about" class="about">
-  <h2>Hi, I'm ${esc(site.owner.split(" ")[0])}.</h2>
-  <p>${esc(site.about)}</p>
-</section>`,
+${apps.map(showcase).join("\n")}
+<section class="philosophy" id="about">
+  <div class="wrap">
+    <div class="philosophy-head"><p class="label">${esc(home.philosophyLabel)}</p><h2>${lines(home.philosophyTitle)}</h2></div>
+    <div class="benefits">${home.benefits.map(([t, d]) => `<div class="benefit"><img src="/assets/home/check-circle.svg" width="30" height="30" alt=""><h3>${esc(t)}</h3><p>${esc(d)}</p></div>`).join("")}</div>
+    <div class="promise"><strong>${esc(home.promise)}</strong><span>${esc(home.promiseNote)}</span></div>
+  </div>
+</section>
+${closing}`,
   });
 }
 
@@ -130,7 +183,7 @@ function appPage(a) {
     <img class="panel-icon" src="/assets/${a.slug}/icon.png" alt="">
     <h1>${esc(a.name)}</h1>
     <p class="tagline">${esc(a.tagline)}</p>
-    <p class="promise">${esc(a.promise)}</p>
+    <p class="promise-text">${esc(a.promise)}</p>
     <div class="cta">${cta}</div>
   </div>
   <div class="rise">${phone(a)}</div>
@@ -198,7 +251,7 @@ const notFound = () => page({ title: `Not found · ${site.name}`, description: "
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 const write = (rel, text) => { const f = path.join(OUT, rel); mkdirSync(path.dirname(f), { recursive: true }); writeFileSync(f, text); };
-write("index.html", home());
+write("index.html", homePage());
 for (const a of apps) {
   write(`${a.slug}/index.html`, appPage(a));
   for (const k of LEGAL) write(`${a.slug}/${k}/index.html`, legalPage(a, k));
@@ -209,6 +262,7 @@ for (const a of apps) {
 }
 write("privacy/index.html", sitePrivacy());
 write("404.html", notFound());
+cpSync(path.join(SITE, "assets", "home"), path.join(OUT, "assets", "home"), { recursive: true });
 if (existsSync(path.join(SITE, "cards"))) cpSync(path.join(SITE, "cards"), path.join(OUT, "cards"), { recursive: true });
 cpSync(path.join(ROOT, "src", "style.css"), path.join(OUT, "style.css"));
 cpSync(path.join(ROOT, "src", "motion.js"), path.join(OUT, "motion.js"));

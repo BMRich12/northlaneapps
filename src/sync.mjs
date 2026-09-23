@@ -87,6 +87,8 @@ for (const slug of readdirSync(DASHBOARDS).filter((s) => existsSync(path.join(DA
     colour: o.colour ?? panelColour(icon),
     appStoreId,
     screens: screens.map((_, i) => `screen-${i + 1}.png`),
+    // The homepage's showcase for this app (label, blurb, screen colour, decoration); see site/showcase/.
+    showcase: o.showcase ?? null,
   });
 }
 writeFileSync(path.join(SITE, "apps.json"), `${JSON.stringify(apps, null, 2)}\n`);

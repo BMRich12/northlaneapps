@@ -27,13 +27,13 @@ const inline = (f) => `data:image/png;base64,${readFileSync(f).toString("base64"
 const asset = (slug, name) => path.join(SITE, "assets", slug, name);
 
 const head = `<!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; }
 html, body { width: ${W}px; height: ${H}px; overflow: hidden; }
-body { font-family: "Geist", system-ui, sans-serif; }
-.display { font-family: "Archivo", "Helvetica Neue", sans-serif; font-weight: 800; }
-.phone { background: #16181A; overflow: hidden; }
+body { font-family: "Inter", system-ui, sans-serif; }
+.display { font-family: "DM Sans", "Helvetica Neue", sans-serif; font-weight: 700; }
+.phone { background: #171714; overflow: hidden; }
 .phone img { width: 100%; display: block; object-fit: cover; object-position: top; }
 </style></head><body>`;
 
@@ -41,7 +41,7 @@ function appCard(a) {
   const shot = a.screens[0] ? `<div class="phone" style="position:absolute; right:88px; top:92px; width:330px; height:560px; border-radius:48px 48px 0 0; padding:11px 11px 0;"><img src="${inline(asset(a.slug, a.screens[0]))}" style="height:716px; border-radius:38px 38px 0 0;"></div>` : "";
   return `${head}<div style="position:relative; width:${W}px; height:${H}px; background:${a.colour}; color:#fff; padding:72px 80px; overflow:hidden;">
   <img src="${inline(asset(a.slug, "icon.png"))}" style="width:104px; height:104px; border-radius:24px; box-shadow:0 0 0 3px rgba(255,255,255,.35);">
-  <h1 class="display" style="margin-top:36px; max-width:600px; font-stretch:112%; font-size:${a.name.length > 16 ? 68 : 80}px; line-height:1; letter-spacing:-0.02em;">${esc(a.name)}</h1>
+  <h1 class="display" style="margin-top:36px; max-width:600px; font-size:${a.name.length > 16 ? 70 : 82}px; line-height:.98;">${esc(a.name)}</h1>
   <p style="margin-top:22px; max-width:560px; font-size:30px; line-height:1.35;">${esc(a.tagline)}</p>
   <p style="position:absolute; left:80px; bottom:60px; font-size:22px; font-weight:600; opacity:.85;">${esc(site.domain)}</p>
   ${shot}
@@ -50,11 +50,11 @@ function appCard(a) {
 
 function homeCard() {
   const lanes = apps.slice(0, 3).map((a) => `<div style="flex:1; background:${a.colour}; border-radius:28px; display:flex; align-items:center; justify-content:center;"><img src="${inline(asset(a.slug, "icon.png"))}" style="width:112px; height:112px; border-radius:26px; box-shadow:0 0 0 3px rgba(255,255,255,.35);"></div>`).join("");
-  return `${head}<div style="position:relative; width:${W}px; height:${H}px; background:#FBFAF7; color:#16181A; padding:72px 80px; display:flex; gap:56px;">
+  return `${head}<div style="position:relative; width:${W}px; height:${H}px; background:#F3EFE7; color:#171714; padding:72px 80px; display:flex; gap:56px;">
   <div style="flex:1.25; display:flex; flex-direction:column;">
-    <h1 class="display" style="font-stretch:125%; font-size:108px; line-height:.92; letter-spacing:-0.035em;">NorthLane<br>Apps</h1>
+    <h1 class="display" style="font-weight:400; font-size:84px; line-height:.96;">Small apps.<br>Clearer days.</h1>
     <p style="margin-top:32px; font-size:28px; line-height:1.4;">${esc(site.tagline)}</p>
-    <p style="margin-top:auto; font-size:22px; font-weight:600; color:#54595D;">${esc(site.domain)}</p>
+    <p style="margin-top:auto; font-size:22px; font-weight:600; color:#5D5A53;">${esc(site.domain)}</p>
   </div>
   <div style="flex:1; display:flex; flex-direction:column; gap:20px;">${lanes}</div>
 </div></body></html>`;

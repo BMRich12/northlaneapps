@@ -19,44 +19,92 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="wrap top">
-  <a class="brand" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path d="M16 6.5 21.6 25 16 20.8 10.4 25Z"/></svg>NorthLane Apps</a>
-  <nav class="nav" aria-label="Main"><a href="/#apps">Apps</a><a href="/#about">About</a><a href="mailto:northlaneapps@gmail.com">Contact</a></nav>
+  <a class="brand" href="/"><span class="mark"><img src="/assets/home/waves-ladder.svg" width="18" height="18" alt=""></span>NorthLane Apps</a>
+  <nav class="nav" aria-label="Main"><a href="/#apps">Apps</a><a href="/#about">About</a><a href="/privacy/">Privacy</a><a class="button" href="mailto:northlaneapps@gmail.com?subject=Launch%20list">Get updates <span class="arrow" aria-hidden="true">↗</span></a></nav>
 </header>
-<main id="main" class="wrap">
-<section class="hero">
-  <p class="eyebrow">Independent iPhone apps</p>
-  <h1>NorthLane<br>Apps</h1>
-  <div class="hero-row"><p>Small iPhone apps that do one thing well, made by Brody Richmond.</p><a class="button" href="#apps">See the apps <span aria-hidden="true">↓</span></a></div>
+<main id="main">
+<section class="wrap hero">
+  <div class="hero-copy">
+    <p class="label label-dot">Independent iPhone app studio</p>
+    <h1>Small apps.<br>Clearer days.</h1>
+    <p class="lede">Thoughtful iPhone tools that do one thing well—made independently by Brody Richmond.</p>
+    <div class="hero-actions"><a class="button" href="#apps">Explore the apps <span class="arrow" aria-hidden="true">↗</span></a><span>Two useful ideas, taking shape.</span></div>
+  </div>
+  <div class="arch" aria-hidden="true">
+    <img class="road" src="/assets/home/road.svg" width="420" height="590" alt="">
+    <span class="seal"><span>Built slowly<br>Used often</span></span>
+  </div>
 </section>
-<div class="section-head" id="apps"><h2>The apps</h2><span>2 for iPhone</span></div>
-<section class="apps" aria-label="Apps">
-<a class="panel" href="/chore-sized-declutter/" style="background-color: #B8492F">
-    <div class="panel-head"><img class="panel-icon" src="/assets/chore-sized-declutter/icon.png" alt=""><span class="badge">Coming soon</span></div>
-    <h2 class="panel-name">Chore-Sized Declutter</h2>
-    <p>Snap a shelf, get one task.</p>
-    <div class="rise"><div class="phone "><img src="/assets/chore-sized-declutter/screen-1.png" alt="Chore-Sized Declutter on iPhone" loading="lazy"></div></div>
-  </a>
-<a class="panel" href="/recipe-yield/" style="background-color: #8d2135">
-    <div class="panel-head"><img class="panel-icon" src="/assets/recipe-yield/icon.png" alt=""><span class="badge">Coming soon</span></div>
-    <h2 class="panel-name">Recipe Yield</h2>
-    <p>Convert any recipe instantly.</p>
-    <div class="rise"><div class="phone "><img src="/assets/recipe-yield/screen-1.png" alt="Recipe Yield on iPhone" loading="lazy"></div></div>
-  </a>
+<section class="wrap intro" id="apps">
+  <div><p class="label">Made for everyday friction</p><h2>Two focused tools.<br>Nothing extra.</h2></div>
+  <p>No sprawling ecosystems. Just considered software for moments that deserve to feel easier.</p>
 </section>
-<section id="about" class="about">
-  <h2>Hi, I'm Brody.</h2>
-  <p>I build small iPhone apps, one everyday problem at a time. Everything you put into them stays on your phone: no accounts, no ads, no tracking.</p>
+<section class="showcase" style="--app: #B84F32; z-index: 2" aria-label="Chore-Sized Declutter">
+  <div class="wrap showcase-inner">
+    <div class="stage"><img class="art art-top-left" src="/assets/home/sparkle.svg" alt=""><div class="device"><div class="screen" style="background-color: #F3EFE7"><div class="scr-status"><b>9:41</b><span>● ᯤ ▰</span></div><div class="scr-head"><span>Declutter</span><span class="scr-menu">•••</span></div>
+<img class="scr-photo" src="/assets/home/shelf-photo.jpg" alt="A bookshelf in a living room">
+<p class="scr-title">Start with one small shelf.</p>
+<div class="scr-task"><span>Your 10-minute task</span><strong>Clear the top shelf</strong></div>
+</div></div></div>
+    <div class="story">
+      <p class="label">01 / Home</p>
+      <h3><a href="/chore-sized-declutter/">Chore-Sized Declutter</a></h3>
+      <p class="quote">“Snap a shelf, get one task.”</p>
+      <p class="blurb">Turn an overwhelming room into one clear, manageable next step. A calmer home starts small.</p>
+      <span class="availability"><span class="dot"></span>Coming soon</span>
+    </div>
+  </div>
+</section>
+<section class="showcase flip" style="--app: #8B3154; z-index: 1" aria-label="Recipe Yield">
+  <div class="wrap showcase-inner">
+    <div class="stage"><img class="art art-bottom-right" src="/assets/home/aperture.svg" alt=""><div class="device"><div class="screen" style="background-color: #FFF7F9"><div class="scr-status"><b>9:41</b><span>● ᯤ ▰</span></div><div class="scr-head"><span>Recipe Yield</span><span class="scr-menu">•••</span></div>
+<div class="scr-recipe">
+  <p class="scr-title">Lemon cake</p>
+  <div class="scr-yield"><span>Original yield</span><strong>8 servings</strong></div>
+  <div class="scr-adjust"><span class="scr-step">−</span><span class="scr-count">12</span><span class="scr-step scr-step-on">+</span></div>
+</div>
+<ul class="scr-list"><li>2¼ cups flour</li><li>1½ cups sugar</li><li>3 eggs</li></ul>
+</div></div></div>
+    <div class="story">
+      <p class="label">02 / Kitchen</p>
+      <h3><a href="/recipe-yield/">Recipe Yield</a></h3>
+      <p class="quote">“Convert any recipe instantly.”</p>
+      <p class="blurb">Scale servings up or down without redoing the math. Your ingredients update in an instant.</p>
+      <span class="availability"><span class="dot"></span>Coming soon</span>
+    </div>
+  </div>
+</section>
+<section class="philosophy" id="about">
+  <div class="wrap">
+    <div class="philosophy-head"><p class="label">Software with boundaries</p><h2>Useful by design.<br>Private by default.</h2></div>
+    <div class="benefits"><div class="benefit"><img src="/assets/home/check-circle.svg" width="30" height="30" alt=""><h3>No accounts</h3><p>Open the app and get on with your day.</p></div><div class="benefit"><img src="/assets/home/check-circle.svg" width="30" height="30" alt=""><h3>No ads</h3><p>Your attention is never the business model.</p></div><div class="benefit"><img src="/assets/home/check-circle.svg" width="30" height="30" alt=""><h3>No tracking</h3><p>What you do is yours alone.</p></div></div>
+    <div class="promise"><strong>Your data stays on your phone.</strong><span>Not a feature. A principle.</span></div>
+  </div>
+</section>
+<section class="closing">
+  <img class="closing-art" src="/assets/home/arrows.svg" width="520" height="400" alt="">
+  <div class="wrap closing-inner">
+    <h2>Good tools are worth the wait.</h2>
+    <p>Be first to know when Chore-Sized Declutter and Recipe Yield are ready.</p>
+    <a class="button button-light" href="mailto:northlaneapps@gmail.com?subject=Launch%20list">Join the quiet launch list <span class="arrow" aria-hidden="true">↗</span></a>
+  </div>
 </section>
 </main>
-<footer class="wrap foot">
-  <div class="foot-brand"><a class="brand" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path d="M16 6.5 21.6 25 16 20.8 10.4 25Z"/></svg>NorthLane Apps</a><p>Small iPhone apps that do one thing well.</p><p class="quiet">© 2026 Brody Richmond</p></div>
-  <nav aria-label="Footer"><a href="/chore-sized-declutter/support/">Chore-Sized Declutter support</a><a href="/recipe-yield/support/">Recipe Yield support</a><a href="/privacy/">Website privacy</a><a href="mailto:northlaneapps@gmail.com">northlaneapps@gmail.com</a></nav>
+<footer class="foot">
+  <div class="wrap foot-nav">
+    <div class="foot-brand"><a class="brand" href="/"><span class="mark"><img src="/assets/home/waves-ladder.svg" width="18" height="18" alt=""></span>NorthLane Apps</a><p>Small iPhone apps that do one thing well.</p></div>
+    <div class="foot-links">
+      <nav aria-label="Apps"><h2>Apps</h2><a href="/chore-sized-declutter/">Chore-Sized Declutter</a><a href="/recipe-yield/">Recipe Yield</a></nav>
+      <nav aria-label="Help"><h2>Help</h2><a href="mailto:northlaneapps@gmail.com?subject=Support">Support</a><a href="/privacy/">Privacy</a><a href="mailto:northlaneapps@gmail.com">Contact</a></nav>
+    </div>
+  </div>
+  <div class="wrap"><div class="foot-base"><span>© 2026 NorthLane Apps.</span><span>Made with care for iPhone.</span></div></div>
 </footer>
 <script src="/motion.js" defer></script>
 </body>

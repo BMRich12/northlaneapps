@@ -1,0 +1,24 @@
+{
+  "label": "Independent iPhone app studio",
+  "title": ["Small apps.", "Clearer days."],
+  "lede": "Thoughtful iPhone tools that do one thing well—made independently by Brody Richmond.",
+  "cta": "Explore the apps",
+  "note": "{Count} useful ideas, taking shape.",
+  "badge": ["Built slowly", "Used often"],
+  "appsLabel": "Made for everyday friction",
+  "appsTitle": ["{Count} focused tools.", "Nothing extra."],
+  "appsNote": "No sprawling ecosystems. Just considered software for moments that deserve to feel easier.",
+  "philosophyLabel": "Software with boundaries",
+  "philosophyTitle": ["Useful by design.", "Private by default."],
+  "benefits": [
+    ["No accounts", "Open the app and get on with your day."],
+    ["No ads", "Your attention is never the business model."],
+    ["No tracking", "What you do is yours alone."]
+  ],
+  "promise": "Your data stays on your phone.",
+  "promiseNote": "Not a feature. A principle.",
+  "closingTitle": "Good tools are worth the wait.",
+  "closingText": "Be first to know when {apps} {are} ready.",
+  "closingButton": "Join the quiet launch list",
+  "footerNote": "Made with care for iPhone."
+}
