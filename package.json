@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "sync": "node src/sync.mjs",
+    "cards": "node src/cards.mjs",
     "build": "node src/build.mjs",
     "preview": "python3 -m http.server 4488 --directory docs"
   }

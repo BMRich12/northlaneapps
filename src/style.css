@@ -112,3 +112,8 @@ a:hover { color: var(--hover); }
   .hero h1 { font-stretch: 108%; font-size: 15.5vw; }
   .foot { margin-top: 72px; }
 }
+
+/* the smallest phones (320px): the name and the links cannot share a line */
+@media (max-width: 380px) {
+  .top { flex-wrap: wrap; row-gap: 6px; }
+}
