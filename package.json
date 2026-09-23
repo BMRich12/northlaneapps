@@ -1,0 +1,10 @@
+{
+  "name": "northlaneapps",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "node src/sync.mjs",
+    "build": "node src/build.mjs",
+    "preview": "python3 -m http.server 4488 --directory docs"
+  }
+}

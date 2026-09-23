@@ -1,0 +1,114 @@
+/* NorthLane Apps — direction C, "Colour Lanes".
+   The whole look is these values. Change them to restyle every page; each app's
+   panel colour comes from site/apps.json (taken from its icon). */
+:root {
+  --ground: #FBFAF7;
+  --ink: #16181A;
+  --ink-soft: #33383B;
+  --ink-quiet: #54595D;
+  --line: #16181A;
+  --hover: #B8492F;
+  --display: "Archivo", "Helvetica Neue", sans-serif;
+  --body: "Geist", system-ui, -apple-system, sans-serif;
+  --radius-panel: 32px;
+  --radius-pill: 999px;
+  --page: 1296px;
+  --gutter: 72px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--body); font-size: 18px; line-height: 1.55; }
+img { max-width: 100%; display: block; }
+a { color: var(--ink); text-underline-offset: 4px; }
+a:hover { color: var(--hover); }
+:focus-visible { outline: 3px solid var(--hover); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: calc(var(--page) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
+.skip { position: absolute; left: -9999px; } .skip:focus { left: 16px; top: 16px; background: var(--ink); color: #fff; padding: 8px 14px; z-index: 10; }
+
+/* header and footer */
+.top { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-top: 32px; padding-bottom: 32px; }
+.brand { font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: 20px; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
+.nav { display: flex; gap: 28px; font-weight: 500; font-size: 16px; }
+.nav a { text-decoration: none; }
+.foot { margin-top: 112px; padding-top: 28px; padding-bottom: 44px; border-top: 2px solid var(--line); display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; font-size: 15px; }
+.foot nav { display: flex; gap: 24px; flex-wrap: wrap; }
+
+/* home */
+.hero { padding-top: 40px; padding-bottom: 64px; display: flex; flex-direction: column; gap: 24px; }
+.hero h1 { margin: 0; font-family: var(--display); font-stretch: 125%; font-weight: 800; font-size: clamp(44px, 11vw, 148px); line-height: 0.92; letter-spacing: -0.035em; }
+.hero-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+.hero-row p { margin: 0; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.4; max-width: 640px; }
+.button { display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: var(--radius-pill); background: var(--ink); color: #fff; font-weight: 600; font-size: 16px; text-decoration: none; }
+.button:hover { color: #fff; background: #000; }
+.apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.panel { color: #fff; border-radius: var(--radius-panel); padding: 48px 48px 0; display: flex; flex-direction: column; gap: 14px; overflow: hidden; text-decoration: none; min-height: 680px; }
+.panel:hover { color: #fff; }
+.panel:hover .panel-name { text-decoration: underline; text-underline-offset: 6px; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; }
+.panel-icon { width: 72px; height: 72px; border-radius: 17px; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35); }  /* the ring keeps an icon whose colour matches its panel visible */
+.badge { font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: var(--radius-pill); background: rgba(0, 0, 0, 0.22); }
+.panel-name { margin: 8px 0 0; font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: clamp(34px, 3.4vw, 48px); line-height: 1; letter-spacing: -0.02em; }
+.panel p { margin: 0; font-size: 20px; line-height: 1.45; max-width: 460px; }
+.rise { margin-top: auto; padding-top: 24px; display: flex; justify-content: center; }
+.rise .phone { width: 270px; height: 380px; border-radius: 44px 44px 0 0; padding: 10px 10px 0; }
+.rise .phone img { height: 560px; border-radius: 35px 35px 0 0; }
+.about { margin-top: 96px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; }
+.about h2 { margin: 0; font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: clamp(32px, 3.2vw, 44px); line-height: 1.05; letter-spacing: -0.02em; }
+.about p { margin: 0; font-size: 20px; line-height: 1.6; color: var(--ink-soft); }
+
+/* phones */
+.phone { background: var(--ink); overflow: hidden; }
+.phone img { width: 100%; object-fit: cover; object-position: top; }
+
+/* app page */
+.app-hero { color: #fff; border-radius: var(--radius-panel); padding: 56px 56px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; overflow: hidden; }
+.app-hero .text { display: flex; flex-direction: column; gap: 16px; padding-bottom: 56px; }
+.app-hero h1 { margin: 0; font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: clamp(40px, 5vw, 64px); line-height: 1; letter-spacing: -0.025em; }
+.app-hero .tagline { margin: 0; font-size: 24px; line-height: 1.35; }
+.app-hero .promise { margin: 0; font-size: 19px; line-height: 1.55; opacity: 0.92; max-width: 520px; }
+.app-hero .cta { margin-top: 8px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.app-hero .cta .button { background: #fff; color: var(--ink); }
+.app-hero .cta .button:hover { background: var(--ground); color: var(--ink); }
+.soon { display: inline-flex; align-items: center; min-height: 48px; padding: 0 20px; border-radius: var(--radius-pill); background: rgba(0, 0, 0, 0.22); font-weight: 600; font-size: 16px; }
+.app-hero .rise { margin: 0; padding: 0; align-self: end; }
+.app-hero .rise .phone { width: 300px; height: 470px; }
+.app-hero .rise .phone img { height: 640px; }
+.screens { margin-top: 72px; display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; }
+.screens .phone { width: 250px; border-radius: 40px; padding: 9px; }
+.screens .phone img { border-radius: 32px; aspect-ratio: 1320 / 2868; }
+.facts { margin-top: 72px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; border-top: 2px solid var(--line); padding-top: 40px; }
+.facts h2 { margin: 0 0 8px; font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: 28px; letter-spacing: -0.01em; }
+.facts p { margin: 0; color: var(--ink-soft); }
+.facts ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+/* legal pages */
+.doc { max-width: 720px; }
+.doc .crumb { font-size: 15px; color: var(--ink-quiet); margin: 16px 0 12px; }
+.doc h1 { font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: clamp(36px, 4.4vw, 52px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 32px; }
+.doc h2 { font-family: var(--display); font-stretch: 105%; font-weight: 700; font-size: 22px; margin: 36px 0 8px; }
+.doc p { margin: 0 0 14px; color: var(--ink-soft); }
+
+/* not found */
+.lost { padding-top: 80px; }
+.lost h1 { font-family: var(--display); font-stretch: 125%; font-weight: 800; font-size: clamp(48px, 8vw, 96px); margin: 0 0 16px; letter-spacing: -0.03em; }
+
+/* narrow screens */
+@media (max-width: 900px) {
+  :root { --gutter: 20px; }
+  body { font-size: 17px; }
+  .apps, .about, .facts, .app-hero { grid-template-columns: minmax(0, 1fr); }
+  .about { gap: 16px; margin-top: 72px; }
+  .panel { padding: 32px 28px 0; min-height: 0; }
+  .app-hero { padding: 36px 28px 0; gap: 8px; }
+  .app-hero .text { padding-bottom: 8px; }
+  .rise .phone, .app-hero .rise .phone { width: 230px; height: 330px; }
+  .rise .phone img, .app-hero .rise .phone img { height: 480px; }
+  .screens .phone { width: 42%; min-width: 150px; }
+  .top { padding-top: 20px; padding-bottom: 20px; }
+  .brand { font-size: 17px; }
+  .nav { gap: 16px; font-size: 15px; }
+  /* A wide face at phone width: narrower and scaled to the screen so "NorthLane" never runs off it. */
+  .hero h1 { font-stretch: 108%; font-size: 15.5vw; }
+  .foot { margin-top: 72px; }
+}

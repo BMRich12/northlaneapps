@@ -1,0 +1,16 @@
+{
+  "chore-sized-declutter": {
+    "name": "Chore-Sized Declutter",
+    "tagline": "Snap a shelf, get one task.",
+    "promise": "Point your camera at one shelf or drawer and get a single ten-minute task for that spot. Take an after photo when you are done to see the change.",
+    "privacy": "Your photos stay on your iPhone. No account, no ads, no tracking.",
+    "hero": "M1-task",
+    "colour": "#B8492F"
+  },
+  "recipe-yield": {
+    "name": "Recipe Yield",
+    "tagline": "Convert any recipe instantly.",
+    "promise": "Paste in a recipe, type the servings you are actually cooking, and every quantity recalculates on the spot. Copy the result to wherever you cook from.",
+    "privacy": "Your recipes stay on your iPhone. No account, no ads, no tracking."
+  }
+}
