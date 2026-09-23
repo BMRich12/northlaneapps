@@ -40,6 +40,14 @@ function panelColour(icon) {
   return `#${c.map((x) => Math.round(x).toString(16).padStart(2, "0")).join("")}`;
 }
 
+/** A screen that is nearly one flat colour (a camera view in the simulator, a loading screen) says nothing: leave it out. */
+function isBlank(f) {
+  const raw = execFileSync("ffmpeg", ["-v", "error", "-i", f, "-vf", "crop=iw:ih*0.9:0:ih*0.08,scale=32:64", "-f", "rawvideo", "-pix_fmt", "gray", "-"]);
+  const mean = raw.reduce((a, v) => a + v, 0) / raw.length;
+  const sd = Math.sqrt(raw.reduce((a, v) => a + (v - mean) ** 2, 0) / raw.length);
+  return sd < 6;
+}
+
 /** Bare app screens beat finished store shots: the site frames its own phones. */
 function screensFor(slug, dash, hero) {
   const shots = rows(read(path.join(dash, "screenshots.md")));
@@ -64,7 +72,7 @@ for (const slug of readdirSync(DASHBOARDS).filter((s) => existsSync(path.join(DA
   const out = path.join(SITE, "assets", slug);
   mkdirSync(out, { recursive: true });
   execFileSync("sips", ["-Z", "512", icon, "--out", path.join(out, "icon.png")], { stdio: "ignore" });
-  const screens = screensFor(slug, dash, o.hero).filter((f) => existsSync(f)).slice(0, 3);
+  const screens = screensFor(slug, dash, o.hero).filter((f) => existsSync(f) && !isBlank(f)).slice(0, 3);
   screens.forEach((f, i) => execFileSync("sips", ["-Z", "1100", f, "--out", path.join(out, `screen-${i + 1}.png`)], { stdio: "ignore" }));
   // The app's remote config (maintenance message, kill switches): the app fetches <site>/<slug>/config.json.
   const config = path.join(MEMORY, "docs", slug, "config.json");

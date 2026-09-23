@@ -34,6 +34,9 @@ const md = (text) => text.trim().split(/\n{2,}/).map((block) => {
   return lines.map((l) => (l.startsWith("## ") ? `<h2>${inline(l.slice(3))}</h2>` : `<p>${inline(l)}</p>`)).join("\n");
 }).join("\n");
 
+/** The studio's mark: the favicon's north arrow, in the ink colour. */
+const mark = `<svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path d="M16 6.5 21.6 25 16 20.8 10.4 25Z"/></svg>`;
+
 const storeUrl = (a) => (a.appStoreId ? `https://apps.apple.com/app/id${a.appStoreId}` : null);
 const year = new Date().getFullYear();
 
@@ -68,14 +71,14 @@ function page({ title, description, path: at, body, card = "home" }) {
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="wrap top">
-  <a class="brand" href="/">${esc(site.name)}</a>
+  <a class="brand" href="/">${mark}${esc(site.name)}</a>
   <nav class="nav" aria-label="Main"><a href="/#apps">Apps</a><a href="/#about">About</a><a href="mailto:${esc(site.email)}">Contact</a></nav>
 </header>
 <main id="main" class="wrap">
 ${body}
 </main>
 <footer class="wrap foot">
-  <span>© ${year} ${esc(site.name)}</span>
+  <div class="foot-brand"><a class="brand" href="/">${mark}${esc(site.name)}</a><p>${esc(site.tagline)}</p><p class="quiet">© ${year} ${esc(site.owner)}</p></div>
   <nav aria-label="Footer">${apps.map((a) => `<a href="/${a.slug}/support/">${esc(a.name)} support</a>`).join("")}<a href="/privacy/">Website privacy</a><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></nav>
 </footer>
 <script src="/motion.js" defer></script>
@@ -88,7 +91,7 @@ const phone = (a, cls = "") => (a.screens[0] ? `<div class="phone ${cls}"><img s
 const status = (a) => (storeUrl(a) ? `<span class="badge">On the App Store</span>` : `<span class="badge">Coming soon</span>`);
 
 function home() {
-  const panels = apps.map((a) => `<a class="panel" href="/${a.slug}/" style="background: ${esc(a.colour)}">
+  const panels = apps.map((a) => `<a class="panel" href="/${a.slug}/" style="background-color: ${esc(a.colour)}">
     <div class="panel-head"><img class="panel-icon" src="/assets/${a.slug}/icon.png" alt="">${status(a)}</div>
     <h2 class="panel-name">${esc(a.name)}</h2>
     <p>${esc(a.tagline)}</p>
@@ -99,10 +102,12 @@ function home() {
     description: `${site.tagline} Made by ${site.owner}.`,
     path: "/",
     body: `<section class="hero">
+  <p class="eyebrow">Independent iPhone apps</p>
   <h1>NorthLane<br>Apps</h1>
-  <div class="hero-row"><p>${esc(site.tagline.replace(/\.$/, ""))}, made by ${esc(site.owner)}.</p><a class="button" href="#apps">See the apps</a></div>
+  <div class="hero-row"><p>${esc(site.tagline.replace(/\.$/, ""))}, made by ${esc(site.owner)}.</p><a class="button" href="#apps">See the apps <span aria-hidden="true">↓</span></a></div>
 </section>
-<section id="apps" class="apps" aria-label="Apps">
+<div class="section-head" id="apps"><h2>The apps</h2><span>${apps.length} for iPhone</span></div>
+<section class="apps" aria-label="Apps">
 ${panels}
 </section>
 <section id="about" class="about">
@@ -120,7 +125,7 @@ function appPage(a) {
     description: `${a.tagline} ${a.promise}`,
     path: `/${a.slug}/`,
     card: a.slug,
-    body: `<section class="app-hero" style="background: ${esc(a.colour)}">
+    body: `<section class="app-hero" style="background-color: ${esc(a.colour)}">
   <div class="text">
     <img class="panel-icon" src="/assets/${a.slug}/icon.png" alt="">
     <h1>${esc(a.name)}</h1>
